@@ -1,0 +1,35 @@
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#int f0/4
+Switch(config-if)#switchport mode trunk 
+Switch(config-if)#exit
+
+Switch(config)#vtp mode server 
+Switch(config)#vtp domain cisco
+Switch(config)#vtp password 123
+
+Switch(config)#vlan 2
+Switch(config-vlan)#name sales
+Switch(config-vlan)#vlan 20
+Switch(config-vlan)#name marketing
+Switch(config-vlan)#vlan 30
+Switch(config-vlan)#name IT
+Switch(config-vlan)#end
+Switch#sh vlan 
+
+=====================================
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#int f0/4
+Switch(config-if)#switchport mode trunk
+Switch(config)#int f0/5 
+Switch(config-if)#switchport mode trunk 
+Switch(config-if)#exit
+
+Switch(config)#vtp mode client 
+Switch(config)#vtp domain cisco
+Switch(config)#vtp password 123
+Switch(config)#end
+Switch#sh vlan 

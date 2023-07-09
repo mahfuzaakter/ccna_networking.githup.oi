@@ -1,0 +1,81 @@
+
+===========================================
+L2 Switch
+=========
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#vlan 2
+Switch(config-vlan)#vlan 3
+Switch(config-vlan)#exit
+
+Switch(config)#interface range f0/1-2
+Switch(config-if-range)#switchport mode access 
+Switch(config-if-range)#switchport access vlan 2
+Switch(config-if-range)#interface range f0/3-4
+Switch(config-if-range)#switchport mode access 
+Switch(config-if-range)#switchport access vlan 3
+
+Switch(config-if-range)#int f0/5
+Switch(config-if)#switchport mode trunk 
+===========================================
+L3 Switch
+=========
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#vl 2
+Switch(config-vlan)#vl 3
+Switch(config-vlan)#exit
+
+Switch(config)#ip routing
+
+Switch(config)#interface vlan 2
+Switch(config-if)#ip address 192.168.10.1 255.255.255.0
+Switch(config-if)#interface vlan 3
+Switch(config-if)#ip address 192.168.20.1 255.255.255.0
+
+Switch(config-if)#int f0/1
+Switch(config-if)#switchport trunk encapsulation dot1q 
+Switch(config-if)#switchport mode trunk 
+
+Switch(config-if)#int f0/2
+Switch(config-if)#no switchport 
+Switch(config-if)#ip address 172.16.10.1 255.255.255.252
+Switch(config-if)#exit
+
+Switch(config)#
+Switch(config)#router rip 
+Switch(config-router)#version 2
+Switch(config-router)#network 192.168.10.0
+Switch(config-router)#network 192.168.20.0
+Switch(config-router)#network 172.16.10.0
+
+===============================================
+Router
+======
+Router>
+Router>enable 
+Router#conf t
+Router(config)#int g0/0/0
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 172.16.10.2 255.255.255.252
+Router(config-if)#int g0/0/1
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.200.1 255.255.255.0
+Router(config-if)#exit
+
+Router(config)#ip dhcp pool atova
+Router(dhcp-config)#default-router 192.168.200.1
+Router(dhcp-config)#dns-server 8.8.8.8
+Router(dhcp-config)#domain-name atovatech.com
+Router(dhcp-config)#network 192.168.200.0 255.255.255.0
+Router(dhcp-config)#exit
+Router(config)#ip dhcp excluded-address 192.168.200.200 192.168.200.254
+
+Router(config)#router rip 
+Router(config-router)#version 2
+Router(config-router)#network 192.168.200.0
+Router(config-router)#network 172.16.10.0
+Router(config-router)#^Z
+Router#sh ip route 

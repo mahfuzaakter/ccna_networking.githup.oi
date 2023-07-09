@@ -1,0 +1,11 @@
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#int f0/1
+Switch(config-if)#switchport mode access 
+Switch(config-if)#switchport port-security 
+Switch(config-if)#switchport port-security mac-address sticky 
+Switch(config-if)#switchport port-security maximum 2
+Switch(config-if)#switchport port-security violation protect 
+Switch(config-if)#end
+Switch#wr

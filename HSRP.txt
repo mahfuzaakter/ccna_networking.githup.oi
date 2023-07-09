@@ -1,0 +1,108 @@
+LocalRouter-1
+===========
+Router>
+Router>enable 
+Router#conf t
+Router(config)#
+Router(config)#int g0/0/1
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 202.84.41.1 255.255.255.252
+Router(config-if)#int g0/0/0
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.10.1 255.255.255.0
+Router(config-if)#exit
+
+Router(config)#router rip 
+Router(config-router)#version 2
+Router(config-router)#network 192.168.10.0
+Router(config-router)#network 202.84.41.0
+Router(config-router)#int g0/0/0
+Router(config-if)#standby 1 ip 192.168.10.254
+Router(config-if)#standby 1 priority 200
+Router(config-if)#standby 1 preempt 
+Router(config-if)#exit
+Router#sh standby
+
+========================
+LocalRouter-2
+===========
+Router>
+Router>enable 
+Router#conf t
+Router(config)#
+Router(config)#int g0/0/1
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 202.84.100.1 255.255.255.252
+Router(config-if)#int g0/0/0
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.10.2 255.255.255.0
+Router(config-if)#exit
+
+Router(config)#router rip 
+Router(config-router)#version 2
+Router(config-router)#network 192.168.10.0
+Router(config-router)#network 202.84.100.0
+Router(config-router)#int g0/0/0
+Router(config-if)#standby 1 ip 192.168.10.254
+Router(config-if)#standby 1 priority 200
+Router(config-if)#standby 1 preempt 
+Router(config-if)#exit
+Router#sh standby
+
+========================
+ISP-1
+====
+Router>
+Router>enable 
+Router#conf t
+Router(config)#int g0/0/0
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 202.84.41.2 255.255.255.252
+Router(config-if)#int g0/0/1
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.250.1 255.255.255.252
+Router(config-if)#exit
+Router(config)#router rip 
+Router(config-router)#version 2
+Router(config-router)#network 192.168.250.0
+Router(config-router)#network 202.84.41.0
+===================================
+ISP-2
+====
+Router>
+Router>enable 
+Router#conf t
+Router(config)#int g0/0/0
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 202.84.100.2 255.255.255.252
+Router(config-if)#int g0/0/1
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.200.1 255.255.255.252
+Router(config-if)#exit
+Router(config)#router rip 
+Router(config-router)#version 2
+Router(config-router)#network 202.84.100.0
+Router(config-router)#network 192.168.200.0
+==========================================
+IIG
+===
+Router>
+Router>enable 
+Router#conf t
+Router(config)#int g0/0/0
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.250.2 255.255.255.252
+Router(config-if)#int g0/0/1
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.200.2 255.255.255.252
+Router(config-if)#int lo0
+Router(config-if)#ip address 192.168.100.1 255.255.255.0
+Router(config-if)#exit
+Router(config)#router rip 
+Router(config-router)#version 2
+Router(config-router)#network 192.168.100.0
+Router(config-router)#network 192.168.200.0
+Router(config-router)#network 192.168.250.0
+Router(config-router)#exit
+Router#sh ip int brief 
+

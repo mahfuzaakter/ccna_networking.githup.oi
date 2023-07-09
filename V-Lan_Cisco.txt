@@ -1,0 +1,78 @@
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#hostname SW-1
+SW-1(config)#exit
+SW-1#sh vlan 
+SW-1#conf t
+SW-1(config)#vlan 2
+SW-1(config-vlan)#name sales
+SW-1(config-vlan)#vlan 3
+SW-1(config-vlan)#name marketing
+SW-1(config-vlan)#vlan 4
+SW-1(config-vlan)#name finance
+SW-1(config-vlan)#end
+SW-1#sh vlan 
+SW-1#conf t
+SW-1(config)#int f0/1
+SW-1(config-if)#switchport mode access 
+SW-1(config-if)#switchport access vlan 2
+SW-1(config-if)#int f0/2
+SW-1(config-if)#switchport mode access 
+SW-1(config-if)#switchport access vlan 3
+SW-1(config-if)#int f0/3
+SW-1(config-if)#switchport mode access 
+SW-1(config-if)#switchport access vlan 4
+SW-1(config-if)#
+SW-1(config-if)#int f0/4
+SW-1(config-if)#switchport mode trunk 
+
+==============================================
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#hostname SW-2
+SW-2(config)#vlan 2
+SW-2(config-vlan)#name sales
+SW-2(config-vlan)#vlan 3
+SW-2(config-vlan)#name marketing
+SW-2(config-vlan)#vlan 4
+SW-2(config-vlan)#name finance
+SW-2(config-vlan)#int f0/1
+SW-2(config-if)#switchport mode access 
+SW-2(config-if)#switchport access vlan 2
+SW-2(config-if)#int f0/2
+SW-2(config-if)#switchport mode access 
+SW-2(config-if)#switchport access vlan 3
+SW-2(config-if)#int f0/3
+SW-2(config-if)#switchport mode access 
+SW-2(config-if)#switchport access vlan 4
+
+SW-2(config-if)#int f0/4
+SW-2(config-if)#switchport mode trunk 
+================================================
+Switch>
+Switch>enable 
+Switch#conf t
+Switch(config)#hostname SW-3
+SW-3(config)#vlan 2
+SW-3(config-vlan)#name sales
+SW-3(config-vlan)#vlan 3
+SW-3(config-vlan)#name marketing
+SW-3(config-vlan)#vlan 4
+SW-3(config-vlan)#name finance
+SW-3(config-vlan)#int f0/1
+SW-3(config-if)#switchport mode access 
+SW-3(config-if)#switchport access vlan 2
+SW-3(config-if)#int f0/2
+SW-3(config-if)#switchport mode access 
+SW-3(config-if)#switchport access vlan 3
+SW-3(config-if)#int f0/3
+SW-3(config-if)#switchport mode access 
+SW-3(config-if)#switchport access vlan 4
+SW-3(config-if)#end
+SW-3#sh vlan 
+SW-3#conf t
+SW-3(config)#int f0/4
+SW-3(config-if)#switchport mode trunk 
+SW-3(config-if)#
